@@ -4,15 +4,1200 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SmartUp Angels Roundtables</title>
-<meta name="robots" content="noindex">
-<meta name="theme-color" content="#000032">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Lato:wght@300;400;700;900&display=swap">
+<style>/* SmartUp brand tokens and shared components, from the SmartUp BrandBook: the colors, the fonts, the navy
+   band with its curved edge and the rounded square of the logo. Used by Investor.html and Admin.html. */
+:root {
+  color-scheme: light;
+  --navy: #000032;
+  --ink: #141E32;
+  --ink-2: #4A5470;
+  --placeholder: #6B7390;
+  --orange: #FF6900;
+  --orange-deep: #D24B00;
+  --orange-soft: #FF9B55;
+  --peach: #FFD7B9;
+  --peach-wash: #FFF4EB;
+  --blue: #004B9B;
+  --blue-wash: #DCEBFA;
+  --light: #E9EDF2;
+  --mist: #F4F6F9;
+  --line: #D2D7E1;
+  --line-strong: #B4BCCB;
+  --surface: #FFFFFF;
+  --ok: #17734A;
+  --ok-wash: #E2F3EA;
+  --danger: #B42318;
+  --focus: #004B9B;
+  --radius-lg: 20px;
+  --radius: 14px;
+  --curve: clamp(28px, 5vw, 72px);
+  --shadow: 0 1px 2px rgba(0, 0, 50, .06), 0 10px 28px -14px rgba(0, 0, 50, .24);
+  --font-display: "Comfortaa", "Varela Round", "Trebuchet MS", sans-serif;
+  --font-body: "Lato", "Helvetica Neue", Arial, sans-serif;
+  --font-code: "Comfortaa", "Varela Round", "Trebuchet MS", sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--light); color: var(--ink); font: 400 16px/1.6 var(--font-body); }
+body.no-scroll { overflow: hidden; }
+h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: 700; line-height: 1.2; text-wrap: balance; }
+p { margin: 0; }
+a { color: var(--blue); text-underline-offset: 3px; }
+svg { max-width: 100%; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.masthead :focus-visible { outline-color: var(--orange); }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 40px); }
+.skip { position: absolute; z-index: 60; top: -80px; left: 12px; padding: 10px 14px; border-radius: 10px; background: var(--orange); color: var(--navy); font-weight: 700; text-decoration: none; }
+.skip:focus { top: 12px; }
+.hint { color: var(--ink-2); font-size: .92rem; }
+
+/* The navy band: its bottom-left corner is rounded and the page curves into it on the right,
+   as on every page of the brandbook (the same in the Hebrew pages, so not mirrored for RTL). */
+.top { position: relative; }
+.top::after {
+  content: ""; position: absolute; top: 100%; right: 0; width: var(--curve); height: var(--curve); pointer-events: none;
+  background: radial-gradient(circle at 0 100%, transparent calc(var(--curve) - .5px), var(--navy) var(--curve));
+}
+.masthead { position: relative; overflow: hidden; background: var(--navy); color: #fff; border-bottom-left-radius: var(--curve); }
+.masthead__inner { position: relative; z-index: 1; padding-block: 28px clamp(44px, 6vw, 76px); }
+.masthead .logo { display: block; width: 168px; height: auto; color: #fff; }
+.masthead__intro { display: grid; gap: 16px; max-width: 720px; margin-top: clamp(32px, 5vw, 60px); }
+.masthead h1 { font-size: clamp(2.2rem, 1.3rem + 3.6vw, 3.6rem); letter-spacing: -.01em; }
+.eyebrow { font: 900 .75rem/1.3 var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--orange-soft); }
+.lede { max-width: 62ch; font: 300 clamp(1.05rem, .95rem + .45vw, 1.3rem)/1.55 var(--font-body); color: var(--line); }
+.masthead .tree { position: absolute; z-index: 0; right: -3%; bottom: -24%; width: clamp(220px, 34vw, 470px); height: auto; color: rgba(255, 255, 255, .07); pointer-events: none; }
+.steps { display: flex; flex-wrap: wrap; gap: 10px 26px; margin: 6px 0 0; padding: 0; list-style: none; font-size: .95rem; }
+.steps li { display: flex; align-items: center; gap: 10px; }
+.steps__n { display: inline-grid; flex: none; place-items: center; width: 26px; height: 26px; border-radius: 8px; background: var(--orange); color: var(--navy); font: 700 .8rem/1 var(--font-code); }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 18px;
+  border: 1.5px solid transparent; border-radius: 12px; font: 700 .95rem/1.2 var(--font-body); text-decoration: none; cursor: pointer;
+  transition: background-color .15s, border-color .15s, color .15s; }
+.btn--orange { background: var(--orange); border-color: var(--orange); color: var(--navy); }
+.btn--orange:hover { background: var(--orange-soft); border-color: var(--orange-soft); }
+.btn--navy { background: var(--navy); border-color: var(--navy); color: #fff; }
+.btn--navy:hover { background: var(--blue); border-color: var(--blue); }
+.btn--ghost { background: var(--surface); border-color: var(--line); color: var(--navy); }
+.btn--ghost:hover { border-color: var(--navy); }
+.btn--lg { min-height: 52px; padding-inline: 26px; font-size: 1.05rem; }
+.btn--sm { min-height: 36px; padding: 6px 12px; font-size: .88rem; }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+.linkbtn { padding: 4px 0; border: 0; background: none; color: var(--blue); font: 700 .875rem/1.3 var(--font-body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.iconbtn { display: inline-grid; flex: none; place-items: center; width: 40px; height: 40px; border: 1.5px solid var(--line); border-radius: 10px;
+  background: var(--surface); color: var(--navy); font: 400 1.5rem/1 var(--font-body); cursor: pointer; }
+.iconbtn:hover { border-color: var(--navy); }
+.badge { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 7px; background: var(--orange); color: var(--navy); font: 700 .75rem/1 var(--font-body); }
+
+/* Form fields */
+.field { display: grid; gap: 6px; }
+.field > label { font-size: .9rem; font-weight: 700; color: var(--ink); }
+.opt { font-weight: 400; color: var(--ink-2); }
+.req { color: var(--orange-deep); }
+input:not([type="checkbox"]):not([type="radio"]), textarea, select {
+  width: 100%; padding: 11px 14px; border: 1.5px solid var(--line); border-radius: 12px;
+  background: var(--surface); color: var(--ink); font: 400 1rem/1.4 var(--font-body); }
+textarea { min-height: 64px; resize: vertical; }
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0, 75, 155, .2); }
+::placeholder { color: var(--placeholder); opacity: 1; }
+[aria-invalid="true"] { border-color: var(--danger) !important; }
+.field__err { color: var(--danger); font-size: .85rem; font-weight: 700; }
+.field__err:empty { display: none; }
+
+/* Filter chips and the switch */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 6px 12px; border: 1.5px solid var(--line); border-radius: 999px;
+  background: var(--surface); color: var(--ink); font: 400 .9rem/1.2 var(--font-body); cursor: pointer; transition: background-color .15s, border-color .15s, color .15s; }
+.chip:hover { border-color: var(--navy); }
+.chip[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
+.chip__count { color: var(--ink-2); font: 700 .75rem/1 var(--font-body); font-variant-numeric: tabular-nums; }
+.chip[aria-pressed="true"] .chip__count { color: var(--peach); }
+.chip.is-zero { opacity: .5; }
+.switch { position: relative; display: flex; align-items: center; gap: 10px; font-size: .95rem; font-weight: 700; cursor: pointer; }
+.switch input { position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; }
+.switch__ui { position: relative; flex: none; width: 40px; height: 24px; border-radius: 999px; background: var(--line); transition: background-color .15s; }
+.switch__ui::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0, 0, 50, .3); transition: transform .15s; }
+.switch input:checked + .switch__ui { background: var(--orange); }
+.switch input:checked + .switch__ui::after { transform: translateX(16px); }
+.switch input:focus-visible + .switch__ui { outline: 3px solid var(--focus); outline-offset: 2px; }
+.switch .chip__count { margin-inline-start: auto; }
+
+/* Startup number tag, echoing the rounded square of the logo */
+.code { display: inline-flex; align-items: center; justify-content: center; min-width: 2.7em; padding: 3px 7px; border-radius: 8px;
+  background: var(--navy); color: #fff; font: 700 .8rem/1.2 var(--font-code); font-variant-numeric: tabular-nums; }
+
+.empty { display: grid; gap: 12px; justify-items: start; padding: 32px; background: var(--surface); border: 1.5px dashed var(--line); border-radius: var(--radius-lg); }
+
+/* Footer */
+.foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-block: 28px 40px; border-top: 1px solid var(--line); font-size: .9rem; }
+.tagline { color: var(--navy); font-size: .8rem; letter-spacing: .16em; }
+.tagline b { font-weight: 900; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}</style>
 <style>
-  html, body { height: 100%; margin: 0; background: #000032; }
-  iframe { display: block; width: 100%; height: 100%; border: 0; }
+.masthead__home { display: inline-block; border-radius: 10px; }
+.layout { display: grid; grid-template-columns: 284px minmax(0, 1fr); gap: 32px; align-items: start; padding-block: 44px 64px; }
+
+.filters { position: sticky; top: 16px; display: grid; gap: 22px; align-content: start; max-height: calc(100vh - 32px); overflow: auto; overscroll-behavior: contain;
+  padding: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.filters__head { display: flex; align-items: center; gap: 12px; }
+.filters__title { margin-inline-end: auto; font-size: 1.1rem; color: var(--navy); }
+.filters__close, .filters__foot, .filters-toggle { display: none; }
+.fgroups { display: grid; gap: 22px; }
+.fgroup { display: grid; gap: 10px; min-width: 0; margin: 0; padding: 0; border: 0; }
+.fgroup__title { padding: 0; font: 900 .72rem/1.2 var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+.fgroup > .linkbtn { justify-self: start; }
+
+.results { display: grid; gap: 16px; align-content: start; min-width: 0; }
+.results__bar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.results__count { margin-inline-end: auto; color: var(--navy); font: 700 clamp(1.45rem, 1.1rem + 1.4vw, 2rem)/1.2 var(--font-display); font-variant-numeric: tabular-nums; }
+.results__n { color: var(--orange-deep); font-size: 1.2em; }
+.results__count.is-message { font-size: 1.05rem; }
+.notice { padding: 10px 14px; border-radius: 12px; background: var(--ok-wash); color: var(--ok); font-size: .92rem; font-weight: 700; }
+
+.cards { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+.card { display: grid; grid-template-columns: 264px minmax(0, 1fr); grid-template-areas: "side main" "note note"; overflow: hidden;
+  background: var(--surface); border: 1.5px solid var(--line-strong); border-radius: var(--radius-lg); scroll-margin-top: 16px;
+  transition: border-color .15s ease, box-shadow .15s ease; }
+.card__main { grid-area: main; display: grid; gap: 14px; align-content: start; padding: 22px 26px 24px; }
+.card__head { display: flex; align-items: center; gap: 14px; }
+.card__num { flex: none; min-width: 3.3em; padding: 10px; border-radius: 12px; font-size: 1.2rem; }
+.card__heading { display: grid; gap: 4px; min-width: 0; }
+.card__sector { color: var(--blue); font: 900 .72rem/1.2 var(--font-body); letter-spacing: .12em; text-transform: uppercase; }
+.card__title { color: var(--navy); font-size: 1.3rem; }
+.card__desc { max-width: 68ch; }
+.card__side { grid-area: side; display: grid; gap: 16px; align-content: start; padding: 20px 22px; border-right: 1px solid var(--line); }
+.card__note { grid-area: note; display: grid; gap: 6px; padding: 14px 26px 18px; background: var(--peach-wash); border-top: 1px solid var(--peach); }
+.card__note label { color: var(--navy); font-size: .9rem; font-weight: 700; }
+.card.is-picked { border-color: var(--orange); box-shadow: 0 0 0 1px var(--orange), var(--shadow); }
+
+.stage { display: grid; gap: 6px; }
+.stage__label, .fact dt { color: var(--ink-2); font: 900 .68rem/1.2 var(--font-body); letter-spacing: .1em; text-transform: uppercase; }
+.stage__value { color: var(--navy); font: 700 1rem/1.25 var(--font-display); }
+.stage__track { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+.stage__track i { height: 6px; border-radius: 3px; background: var(--line); }
+.stage__track i.on { background: var(--orange); }
+.stage__steps { color: var(--ink-2); font-size: .75rem; }
+.facts { display: grid; margin: 0; }
+.fact { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-block: 7px; border-top: 1px solid var(--line); }
+.fact dd { margin: 0; color: var(--navy); font-size: .92rem; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+
+.meet { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 46px; padding: 10px 14px;
+  border: 1.5px solid var(--navy); border-radius: 12px; background: var(--surface); color: var(--navy);
+  font: 700 .95rem/1.2 var(--font-body); cursor: pointer; transition: background-color .15s, color .15s, border-color .15s; }
+.meet:hover { background: var(--navy); color: #fff; }
+.meet__icon { position: relative; flex: none; width: 18px; height: 18px; border: 2px solid currentColor; border-radius: 6px; }
+.meet__icon::before, .meet__icon::after { content: ""; position: absolute; top: 50%; left: 50%; width: 8px; height: 2px; border-radius: 1px; background: currentColor; transform: translate(-50%, -50%); }
+.meet__icon::after { transform: translate(-50%, -50%) rotate(90deg); }
+.meet[aria-pressed="true"] { background: var(--orange); border-color: var(--orange); color: var(--navy); }
+.meet[aria-pressed="true"]:hover { background: var(--orange-soft); border-color: var(--orange-soft); }
+.meet[aria-pressed="true"] .meet__icon { background: var(--navy); border-color: var(--navy); }
+.meet[aria-pressed="true"] .meet__icon::before { width: 5px; height: 9px; border: solid var(--orange); border-width: 0 2px 2px 0; border-radius: 0; background: none; transform: translate(-50%, -62%) rotate(45deg); }
+.meet[aria-pressed="true"] .meet__icon::after { display: none; }
+
+.tray { position: fixed; right: 0; bottom: 0; left: 0; z-index: 20; padding: 0 12px calc(12px + env(safe-area-inset-bottom, 0px)); pointer-events: none; }
+.tray__inner { display: flex; align-items: center; gap: 16px; max-width: 760px; margin-inline: auto; padding: 12px 12px 12px 20px;
+  background: var(--navy); color: #fff; border-radius: 18px; box-shadow: 0 16px 40px -12px rgba(0, 0, 50, .55); pointer-events: auto; animation: rise .25s ease-out; }
+.tray__info { display: grid; flex: 1; gap: 2px; min-width: 0; }
+.tray__count { font: 700 1rem/1.3 var(--font-display); }
+.tray__codes { overflow: hidden; color: var(--line); font-size: .85rem; white-space: nowrap; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+body.has-tray .foot { padding-bottom: 120px; }
+
+.scrim { position: fixed; inset: 0; z-index: 30; background: rgba(0, 0, 50, .55); }
+.scrim--filters { z-index: 25; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 31; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; width: min(560px, 100%);
+  background: var(--surface); box-shadow: -16px 0 48px -16px rgba(0, 0, 50, .45); animation: slide-in .22s ease-out; }
+.drawer__head { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.drawer__head h2 { margin-inline-end: auto; color: var(--navy); font-size: 1.3rem; }
+.drawer__head h2:focus, .done h2:focus { outline: none; }
+.drawer__body { display: grid; gap: 26px; align-content: start; overflow: auto; padding: 20px; }
+.drawer__foot { display: grid; gap: 10px; padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); }
+.drawer__foot .btn { width: 100%; }
+.block { display: grid; gap: 12px; }
+.block__title { color: var(--navy); font-size: 1.02rem; }
+.picklist { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.pick { display: grid; gap: 8px; padding: 12px; border: 1.5px solid var(--line); border-radius: 14px; }
+.pick__head { display: flex; align-items: center; gap: 10px; }
+.pick__label { flex: 1; min-width: 0; color: var(--navy); font-weight: 700; }
+.datelist { display: grid; gap: 8px; }
+.datepick { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 12px;
+  color: var(--navy); font-weight: 700; cursor: pointer; transition: background-color .15s, border-color .15s; }
+.datepick:hover { border-color: var(--navy); }
+.datepick input { flex: none; width: 18px; height: 18px; margin: 0; accent-color: var(--navy); }
+.datepick:has(input:checked) { border-color: var(--orange); background: var(--peach-wash); }
+.datelist.is-invalid .datepick { border-color: var(--danger); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.privacy { color: var(--ink-2); font-size: .85rem; }
+.form-error { color: var(--danger); font-size: .92rem; font-weight: 700; }
+.form-error:empty { display: none; }
+.done { display: grid; gap: 14px; align-content: start; justify-items: start; padding: 36px 24px; }
+.done__dates { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; color: var(--navy); font-weight: 700; }
+.done__badge { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--orange); }
+.done__badge::after { content: ""; width: 14px; height: 24px; border: solid var(--navy); border-width: 0 4px 4px 0; transform: translateY(-3px) rotate(45deg); }
+.done h2 { color: var(--navy); font-size: 1.6rem; }
+.done__codes { color: var(--navy); font: 700 1rem/1.4 var(--font-code); font-variant-numeric: tabular-nums; }
+
+@keyframes rise { from { transform: translateY(16px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes slide-in { from { transform: translateX(24px); opacity: .4; } to { transform: none; opacity: 1; } }
+
+@media (max-width: 960px) {
+  .layout { grid-template-columns: minmax(0, 1fr); padding-block: 28px 48px; }
+  .filters { position: fixed; top: 0; right: 0; bottom: 0; z-index: 26; width: min(420px, 100%); max-height: none; padding: 18px 18px 0;
+    border: 0; border-radius: 0; transform: translateX(100%); visibility: hidden; transition: transform .22s ease, visibility 0s linear .22s; }
+  body.filters-open .filters { transform: none; visibility: visible; transition: transform .22s ease, visibility 0s; box-shadow: -16px 0 48px -16px rgba(0, 0, 50, .45); }
+  .filters__close { display: inline-grid; }
+  .filters-toggle { display: inline-flex; }
+  .filters__foot { position: sticky; bottom: 0; display: block; margin-inline: -18px; padding: 12px 18px calc(12px + env(safe-area-inset-bottom, 0px));
+    background: var(--surface); border-top: 1px solid var(--line); }
+  .filters__foot .btn { width: 100%; }
+}
+@media (min-width: 961px) { .scrim--filters { display: none; } }
+@media (max-width: 720px) {
+  .card { grid-template-columns: minmax(0, 1fr); grid-template-areas: "main" "side" "note"; }
+  .card__main { padding: 18px 18px 20px; }
+  .card__side { padding: 16px 18px 18px; border-top: 1px solid var(--line); border-right: 0; }
+  .card__note { padding: 14px 18px 18px; }
+  .grid2 { grid-template-columns: minmax(0, 1fr); }
+  .tray__inner { padding-left: 16px; }
+}
 </style>
 </head>
 <body>
-<!-- investors.smartupacademy.org shows the SmartUp Angels Roundtables web app (Google Apps Script) full-page. -->
-<iframe src="https://script.google.com/macros/s/AKfycbzOeIq_qDn4MvnHWf3MAAsfOCoSig8bBuwnOc4yurZHmu0INkpXEgqS0tLNez5CDZ8k/exec" title="SmartUp Angels Roundtables" allow="clipboard-write"></iframe>
+<a class="skip" href="#cards">Skip to the startups</a>
+
+<div class="top">
+  <header class="masthead">
+    <div class="masthead__inner wrap">
+      <a class="masthead__home" href="https://smartupacademy.org" target="_top" aria-label="SmartUp Academy"><svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 997.15 295.15" role="img" aria-label="SmartUp"><path fill="#FF6900" d="M259.86 0L35.29 0C15.8 0 0 15.8 0 35.29L0 259.86C0 260.42 0.01 260.98 0.04 261.53C0.91 280.24 16.36 295.15 35.29 295.15L140.32 295.15L140.32 171.91C134.15 145.33 114.77 123.82 89.47 114.67C89.46 114.67 89.46 114.67 89.46 114.67C89.42 114.65 89.38 114.64 89.34 114.62C89.33 114.62 89.32 114.62 89.31 114.61C86.58 113.57 84.65 110.93 84.65 107.84C84.65 103.83 87.89 100.59 91.9 100.59C92.78 100.59 93.62 100.74 94.39 101.03C113.18 107.81 129.2 120.37 140.32 136.57L140.32 89.41C140.32 85.41 143.57 82.16 147.57 82.16C149.57 82.16 151.39 82.97 152.7 84.29C154.01 85.6 154.82 87.41 154.82 89.41L154.82 167.33C165.69 150.36 181.83 137.08 200.93 129.81C201.01 129.78 201.1 129.75 201.18 129.71C201.96 129.43 202.8 129.27 203.68 129.27C207.68 129.27 210.93 132.52 210.93 136.52C210.93 139.65 208.95 142.32 206.17 143.34C202.54 144.66 199.02 146.36 195.64 148.24C192.27 150.12 189.03 152.24 185.96 154.59C182.91 156.93 180.02 159.48 177.32 162.23C174.63 164.98 172.14 167.92 169.86 171.03C167.58 174.15 165.52 177.43 163.71 180.85C161.89 184.3 160.31 187.88 159.01 191.55C158.16 193.95 157.52 196.39 156.8 198.82C156.07 201.27 155.5 203.77 155.08 206.29C154.87 207.64 154.82 208.98 154.82 210.35L154.82 295.15L259.86 295.15C274.21 295.15 286.57 286.57 292.08 274.26C294.05 269.86 295.14 264.99 295.14 259.86L295.14 35.29C295.14 15.8 279.34 0 259.86 0ZM241.82 138.46C240.8 149.01 238.06 159.05 233.87 168.3C229.35 178.27 223.16 187.31 215.65 195.08L215.64 195.08C213.23 197.59 210.68 199.95 208 202.17C196.52 214.29 188.77 229.99 186.63 247.42C186.45 248.84 186.32 250.27 186.22 251.71C186.22 251.89 186.2 252.08 186.18 252.27C186.18 252.29 186.18 252.31 186.18 252.33C186.15 252.43 186.14 252.52 186.12 252.6C186.1 252.66 186.09 252.72 186.08 252.77C186.06 252.89 186.03 253.01 186 253.13C186 253.15 185.99 253.17 185.99 253.19L185.99 253.2C185.98 253.21 185.98 253.22 185.98 253.23L185.98 253.23C185.16 256.33 182.33 258.61 178.97 258.61C175.04 258.61 171.83 255.47 171.73 251.56L171.73 251.56C171.72 251.52 171.71 251.47 171.7 251.43C171.71 251.28 171.72 251.13 171.73 250.98C171.74 250.86 171.75 250.74 171.76 250.61C171.82 249.59 171.91 248.57 172.02 247.55C173.07 237.21 175.8 227.37 179.91 218.29C184.42 208.33 190.61 199.29 198.12 191.52C198.12 191.52 198.12 191.52 198.12 191.52C200.54 189.01 203.1 186.64 205.79 184.4C205.8 184.4 205.8 184.4 205.8 184.39C217.43 172.12 225.21 156.17 227.24 138.48C227.58 135.46 227.76 132.38 227.76 129.27C227.76 127.46 227.7 125.67 227.58 123.9C224.82 82.11 190.05 49.08 147.57 49.08C115.07 49.08 87.09 68.41 74.5 96.2C72.47 100.68 70.84 105.38 69.65 110.25L69.65 110.25C68.17 116.35 67.38 122.72 67.38 129.27C67.38 151.68 76.58 171.95 91.4 186.5C91.41 186.51 91.41 186.51 91.41 186.51C91.42 186.52 91.42 186.52 91.43 186.52C92.64 187.58 93.82 188.68 94.98 189.8C94.98 189.8 94.98 189.8 94.98 189.8C103.31 197.91 110.14 207.53 115.05 218.22C118.6 225.97 121.14 234.27 122.49 242.97C122.88 245.45 123.17 247.96 123.36 250.5C123.36 250.51 123.36 250.51 123.36 250.51L123.36 250.52C123.4 250.8 123.42 251.08 123.42 251.38C123.42 251.39 123.42 251.4 123.42 251.41L123.42 251.46C123.42 255.46 120.18 258.71 116.17 258.71C113.34 258.71 110.88 257.09 109.69 254.72C109.44 254.22 109.24 253.69 109.11 253.13L109.1 253.05L109.02 252.66L108.93 252.24C108.89 251.56 108.84 250.88 108.77 250.21C106.98 230.76 98.25 213.32 85.07 200.4C83.87 199.35 82.71 198.27 81.57 197.16C73.22 189.05 66.37 179.41 61.46 168.7C55.95 156.7 52.88 143.34 52.88 129.27C52.88 122.76 53.54 116.4 54.79 110.25C55.83 105.16 57.27 100.22 59.09 95.46C72.7 59.86 107.19 34.58 147.57 34.58C198.08 34.58 239.35 74.12 242.11 123.93C242.21 125.7 242.26 127.48 242.26 129.27C242.26 132.37 242.11 135.44 241.82 138.46Z"/><path fill="currentColor" d="M380.62 256.46C372.97 252.23 367.7 246.7 364.82 239.87C364.33 238.71 364.09 237.75 364.09 236.98C364.09 235.54 364.62 234.26 365.68 233.16C366.74 232.05 368.18 231.31 370.01 230.92C370.3 230.82 370.78 230.78 371.45 230.78C372.99 230.78 374.46 231.23 375.86 232.15C377.25 233.06 378.28 234.29 378.96 235.83C380.69 239.58 384.11 242.76 389.21 245.35C394.31 247.95 399.93 249.25 406.09 249.25C413.31 249.25 419.42 247.59 424.42 244.27C429.43 240.95 431.93 236.4 431.93 230.63C431.93 225.15 429.81 220.46 425.58 216.56C421.34 212.66 414.9 210.28 406.24 209.42C394.31 208.26 384.92 204.78 378.09 198.95C371.26 193.13 367.85 185.85 367.85 177.09C367.85 170.93 369.6 165.61 373.11 161.14C376.62 156.67 381.44 153.25 387.55 150.89C393.66 148.54 400.51 147.36 408.11 147.36C416.39 147.36 423.36 149.04 429.04 152.41C434.71 155.78 439.53 160.59 443.48 166.84C444.62 168.67 445.2 170.4 445.2 172.04C445.2 174.16 444.24 175.89 442.32 177.23C441.26 177.91 440.01 178.24 438.56 178.24C437.12 178.24 435.78 177.88 434.52 177.16C433.28 176.44 432.31 175.45 431.64 174.2C429.04 169.87 425.79 166.58 421.89 164.32C418 162.06 413.07 160.92 407.1 160.92C399.79 160.92 393.87 162.35 389.35 165.18C384.83 168.02 382.57 172.13 382.57 177.52C382.57 182.53 384.59 186.71 388.63 190.08C392.67 193.45 399.89 195.66 410.28 196.72C421.82 197.87 430.77 201.36 437.12 207.18C443.48 213 446.65 220.67 446.65 230.2C446.65 237.13 444.77 243.07 441.02 248.02C437.27 252.98 432.29 256.68 426.08 259.13C419.87 261.59 413.21 262.81 406.09 262.81C396.76 262.81 388.27 260.7 380.62 256.46ZM564.92 189.93C570.07 195.42 572.64 203.07 572.64 212.88L572.64 254.16C572.64 256.28 571.97 258.03 570.63 259.42C569.28 260.82 567.49 261.52 565.28 261.52C563.17 261.52 561.41 260.82 560.02 259.42C558.62 258.03 557.92 256.28 557.92 254.16L557.92 212.88C557.92 207.01 556.46 202.56 553.52 199.53C550.59 196.5 546.67 194.98 541.76 194.98C536.76 194.98 532.64 196.72 529.42 200.18C526.2 203.64 524.59 208.07 524.59 213.46L524.59 254.16C524.59 256.28 523.91 258.03 522.56 259.42C521.21 260.82 519.44 261.52 517.22 261.52C515.11 261.52 513.35 260.82 511.96 259.42C510.56 258.03 509.87 256.28 509.87 254.16L509.87 212.88C509.87 207.01 508.4 202.56 505.46 199.53C502.53 196.5 498.61 194.98 493.7 194.98C488.6 194.98 484.44 196.72 481.22 200.18C477.99 203.64 476.38 208.07 476.38 213.46L476.38 254.16C476.38 256.28 475.71 258.03 474.36 259.42C473.01 260.82 471.23 261.52 469.02 261.52C466.9 261.52 465.15 260.82 463.75 259.42C462.36 258.03 461.66 256.28 461.66 254.16L461.66 189.93C461.66 187.72 462.36 185.94 463.75 184.59C465.15 183.25 466.9 182.57 469.02 182.57C471.14 182.57 472.87 183.22 474.21 184.52C475.56 185.82 476.28 187.53 476.38 189.64C478.88 187.14 481.87 185.19 485.33 183.8C488.79 182.4 492.54 181.71 496.59 181.71C501.49 181.71 505.9 182.69 509.79 184.67C513.69 186.64 516.89 189.45 519.39 193.11C522.28 189.55 525.88 186.76 530.21 184.74C534.54 182.72 539.36 181.71 544.64 181.71C553.02 181.71 559.78 184.45 564.92 189.93ZM661.91 201.55C658.39 195.44 653.63 190.63 647.62 187.12C641.6 183.61 634.89 181.85 627.48 181.85C620.07 181.85 613.32 183.61 607.21 187.12C601.09 190.63 596.31 195.44 592.85 201.55C589.38 207.66 587.65 214.47 587.65 221.97C587.65 229.48 589.26 236.28 592.49 242.39C595.71 248.51 600.13 253.29 605.76 256.75C611.39 260.22 617.67 261.95 624.6 261.95C630.18 261.95 635.37 260.8 640.19 258.49C644.99 256.18 649.08 252.96 652.45 248.82L652.45 254.16C652.45 256.28 653.15 258.03 654.54 259.42C655.94 260.82 657.7 261.52 659.81 261.52C661.93 261.52 663.68 260.82 665.08 259.42C666.48 258.03 667.17 256.28 667.17 254.16L667.17 221.97C667.17 214.47 665.41 207.66 661.91 201.55ZM649.71 235.75C647.5 239.84 644.44 243.07 640.55 245.42C636.65 247.78 632.29 248.96 627.48 248.96C622.67 248.96 618.32 247.78 614.42 245.42C610.53 243.07 607.45 239.84 605.19 235.75C602.93 231.67 601.8 227.07 601.8 221.97C601.8 216.88 602.93 212.25 605.19 208.12C607.45 203.98 610.53 200.73 614.42 198.38C618.32 196.02 622.67 194.84 627.48 194.84C632.29 194.84 636.65 196.02 640.55 198.38C644.44 200.73 647.5 203.98 649.71 208.12C651.92 212.25 653.03 216.88 653.03 221.97C653.03 227.07 651.92 231.67 649.71 235.75ZM732.84 183.87C735.73 185.41 737.17 187.33 737.17 189.64C737.17 190.32 737.12 190.8 737.03 191.09C736.16 194.17 734.23 195.7 731.25 195.7C730.77 195.7 730.05 195.61 729.09 195.42C725.24 194.74 722.11 194.41 719.71 194.41C712.78 194.41 707.2 195.99 702.96 199.17C698.73 202.34 696.61 206.63 696.61 212.01L696.61 254.16C696.61 256.46 696.01 258.25 694.81 259.49C693.61 260.75 691.8 261.37 689.4 261.37C687.09 261.37 685.31 260.77 684.06 259.57C682.81 258.37 682.18 256.56 682.18 254.16L682.18 189.64C682.18 187.33 682.81 185.56 684.06 184.3C685.31 183.05 687.09 182.43 689.4 182.43C694.21 182.43 696.61 184.83 696.61 189.64L696.61 192.39C699.5 189.02 703.06 186.37 707.3 184.45C711.53 182.53 716.05 181.56 720.86 181.56C725.96 181.56 729.95 182.33 732.84 183.87ZM792.72 248.96C793.92 250.31 794.52 252.04 794.52 254.16C794.52 256.28 793.73 258.01 792.14 259.35C790.55 260.7 788.51 261.37 786.01 261.37L783.41 261.37C778.69 261.37 774.39 260.14 770.49 257.69C766.59 255.24 763.54 251.9 761.33 247.66C759.11 243.43 758.01 238.67 758.01 233.37L758.01 197.73L751.37 197.73C749.35 197.73 747.71 197.15 746.46 195.99C745.21 194.84 744.59 193.4 744.59 191.67C744.59 189.74 745.21 188.2 746.46 187.05C747.71 185.89 749.35 185.32 751.37 185.32L758.01 185.32L758.01 164.53C758.01 162.42 758.68 160.68 760.03 159.33C761.38 157.99 763.11 157.32 765.23 157.32C767.34 157.32 769.07 157.99 770.42 159.33C771.76 160.68 772.44 162.42 772.44 164.53L772.44 185.32L784.71 185.32C786.73 185.32 788.36 185.89 789.62 187.05C790.87 188.2 791.49 189.74 791.49 191.67C791.49 193.4 790.87 194.84 789.62 195.99C788.36 197.15 786.73 197.73 784.71 197.73L772.44 197.73L772.44 233.37C772.44 237.22 773.5 240.45 775.61 243.04C777.73 245.64 780.33 246.94 783.41 246.94L788.32 246.94C790.05 246.94 791.51 247.61 792.72 248.96ZM832.27 258.56C825.1 255.14 819.51 250.4 815.52 244.34C811.53 238.28 809.53 231.35 809.53 223.56L809.53 156.16C809.53 153.95 810.26 152.15 811.7 150.75C813.14 149.35 814.92 148.66 817.04 148.66C819.25 148.66 821.05 149.35 822.45 150.75C823.85 152.15 824.54 153.95 824.54 156.16L824.54 223.56C824.54 228.66 825.92 233.23 828.66 237.27C831.4 241.31 835.2 244.46 840.06 246.72C844.92 248.99 850.47 250.11 856.73 250.11C862.69 250.11 868.03 248.99 872.75 246.72C877.46 244.46 881.14 241.31 883.79 237.27C886.43 233.23 887.76 228.66 887.76 223.56L887.76 156.16C887.76 153.95 888.48 152.15 889.92 150.75C891.36 149.35 893.14 148.66 895.26 148.66C897.38 148.66 899.13 149.35 900.53 150.75C901.92 152.15 902.62 153.95 902.62 156.16L902.62 223.56C902.62 231.26 900.67 238.16 896.78 244.27C892.88 250.38 887.44 255.14 880.47 258.56C873.49 261.97 865.58 263.68 856.73 263.68C847.59 263.68 839.43 261.97 832.27 258.56ZM991.96 201.55C988.49 195.44 983.7 190.63 977.6 187.12C971.48 183.61 964.73 181.85 957.32 181.85C949.91 181.85 943.2 183.61 937.19 187.12C931.17 190.63 926.41 195.44 922.9 201.55C919.38 207.66 917.63 214.47 917.63 221.97L917.63 287.78C917.63 290 918.33 291.77 919.72 293.12C921.12 294.47 922.87 295.15 924.99 295.15C927.2 295.15 928.98 294.47 930.33 293.12C931.68 291.77 932.35 290 932.35 287.78L932.35 248.82C935.72 252.96 939.81 256.18 944.62 258.49C949.43 260.8 954.62 261.95 960.21 261.95C967.13 261.95 973.41 260.22 979.04 256.75C984.67 253.29 989.09 248.51 992.32 242.39C995.54 236.28 997.15 229.48 997.15 221.97C997.15 214.47 995.42 207.66 991.96 201.55ZM979.62 235.75C977.36 239.84 974.28 243.07 970.38 245.42C966.48 247.78 962.13 248.96 957.32 248.96C952.51 248.96 948.15 247.78 944.26 245.42C940.36 243.07 937.31 239.84 935.09 235.75C932.88 231.67 931.77 227.07 931.77 221.97C931.77 216.88 932.88 212.25 935.09 208.12C937.31 203.98 940.36 200.73 944.26 198.38C948.15 196.02 952.51 194.84 957.32 194.84C962.13 194.84 966.48 196.02 970.38 198.38C974.28 200.73 977.36 203.98 979.62 208.12C981.88 212.25 983.01 216.88 983.01 221.97C983.01 227.07 981.88 231.67 979.62 235.75Z"/></svg></a>
+      <div class="masthead__intro">
+        <p class="eyebrow">SmartUp Foundations Course · October 2026</p>
+        <h1>Angels Roundtables</h1>
+        <p class="lede">A look into the startups that will be participating in the October 2026 SmartUp Foundations Course. Select the founders you’d like to meet with for the Angels Roundtables and we’ll take care of the rest.</p>
+        <ol class="steps" aria-label="How it works">
+          <li><span class="steps__n" aria-hidden="true">1</span>Browse and filter the startups</li>
+          <li><span class="steps__n" aria-hidden="true">2</span>Choose “I’d like to meet” and add a note</li>
+          <li><span class="steps__n" aria-hidden="true">3</span>Send your picks to the SmartUp team</li>
+        </ol>
+      </div>
+    </div>
+    <svg class="tree" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 295.14 295.15" aria-hidden="true" focusable="false"><defs><mask id="ar-tree-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="295.14" height="295.15"><rect x="1.5" y="1.5" width="292.14" height="292.15" rx="33.8" fill="#fff"/><path fill="#000" d="M259.86 0L35.29 0C15.8 0 0 15.8 0 35.29L0 259.86C0 260.42 0.01 260.98 0.04 261.53C0.91 280.24 16.36 295.15 35.29 295.15L140.32 295.15L140.32 171.91C134.15 145.33 114.77 123.82 89.47 114.67C89.46 114.67 89.46 114.67 89.46 114.67C89.42 114.65 89.38 114.64 89.34 114.62C89.33 114.62 89.32 114.62 89.31 114.61C86.58 113.57 84.65 110.93 84.65 107.84C84.65 103.83 87.89 100.59 91.9 100.59C92.78 100.59 93.62 100.74 94.39 101.03C113.18 107.81 129.2 120.37 140.32 136.57L140.32 89.41C140.32 85.41 143.57 82.16 147.57 82.16C149.57 82.16 151.39 82.97 152.7 84.29C154.01 85.6 154.82 87.41 154.82 89.41L154.82 167.33C165.69 150.36 181.83 137.08 200.93 129.81C201.01 129.78 201.1 129.75 201.18 129.71C201.96 129.43 202.8 129.27 203.68 129.27C207.68 129.27 210.93 132.52 210.93 136.52C210.93 139.65 208.95 142.32 206.17 143.34C202.54 144.66 199.02 146.36 195.64 148.24C192.27 150.12 189.03 152.24 185.96 154.59C182.91 156.93 180.02 159.48 177.32 162.23C174.63 164.98 172.14 167.92 169.86 171.03C167.58 174.15 165.52 177.43 163.71 180.85C161.89 184.3 160.31 187.88 159.01 191.55C158.16 193.95 157.52 196.39 156.8 198.82C156.07 201.27 155.5 203.77 155.08 206.29C154.87 207.64 154.82 208.98 154.82 210.35L154.82 295.15L259.86 295.15C274.21 295.15 286.57 286.57 292.08 274.26C294.05 269.86 295.14 264.99 295.14 259.86L295.14 35.29C295.14 15.8 279.34 0 259.86 0ZM241.82 138.46C240.8 149.01 238.06 159.05 233.87 168.3C229.35 178.27 223.16 187.31 215.65 195.08L215.64 195.08C213.23 197.59 210.68 199.95 208 202.17C196.52 214.29 188.77 229.99 186.63 247.42C186.45 248.84 186.32 250.27 186.22 251.71C186.22 251.89 186.2 252.08 186.18 252.27C186.18 252.29 186.18 252.31 186.18 252.33C186.15 252.43 186.14 252.52 186.12 252.6C186.1 252.66 186.09 252.72 186.08 252.77C186.06 252.89 186.03 253.01 186 253.13C186 253.15 185.99 253.17 185.99 253.19L185.99 253.2C185.98 253.21 185.98 253.22 185.98 253.23L185.98 253.23C185.16 256.33 182.33 258.61 178.97 258.61C175.04 258.61 171.83 255.47 171.73 251.56L171.73 251.56C171.72 251.52 171.71 251.47 171.7 251.43C171.71 251.28 171.72 251.13 171.73 250.98C171.74 250.86 171.75 250.74 171.76 250.61C171.82 249.59 171.91 248.57 172.02 247.55C173.07 237.21 175.8 227.37 179.91 218.29C184.42 208.33 190.61 199.29 198.12 191.52C198.12 191.52 198.12 191.52 198.12 191.52C200.54 189.01 203.1 186.64 205.79 184.4C205.8 184.4 205.8 184.4 205.8 184.39C217.43 172.12 225.21 156.17 227.24 138.48C227.58 135.46 227.76 132.38 227.76 129.27C227.76 127.46 227.7 125.67 227.58 123.9C224.82 82.11 190.05 49.08 147.57 49.08C115.07 49.08 87.09 68.41 74.5 96.2C72.47 100.68 70.84 105.38 69.65 110.25L69.65 110.25C68.17 116.35 67.38 122.72 67.38 129.27C67.38 151.68 76.58 171.95 91.4 186.5C91.41 186.51 91.41 186.51 91.41 186.51C91.42 186.52 91.42 186.52 91.43 186.52C92.64 187.58 93.82 188.68 94.98 189.8C94.98 189.8 94.98 189.8 94.98 189.8C103.31 197.91 110.14 207.53 115.05 218.22C118.6 225.97 121.14 234.27 122.49 242.97C122.88 245.45 123.17 247.96 123.36 250.5C123.36 250.51 123.36 250.51 123.36 250.51L123.36 250.52C123.4 250.8 123.42 251.08 123.42 251.38C123.42 251.39 123.42 251.4 123.42 251.41L123.42 251.46C123.42 255.46 120.18 258.71 116.17 258.71C113.34 258.71 110.88 257.09 109.69 254.72C109.44 254.22 109.24 253.69 109.11 253.13L109.1 253.05L109.02 252.66L108.93 252.24C108.89 251.56 108.84 250.88 108.77 250.21C106.98 230.76 98.25 213.32 85.07 200.4C83.87 199.35 82.71 198.27 81.57 197.16C73.22 189.05 66.37 179.41 61.46 168.7C55.95 156.7 52.88 143.34 52.88 129.27C52.88 122.76 53.54 116.4 54.79 110.25C55.83 105.16 57.27 100.22 59.09 95.46C72.7 59.86 107.19 34.58 147.57 34.58C198.08 34.58 239.35 74.12 242.11 123.93C242.21 125.7 242.26 127.48 242.26 129.27C242.26 132.37 242.11 135.44 241.82 138.46Z"/></mask></defs><rect width="295.14" height="295.15" fill="currentColor" mask="url(#ar-tree-mask)"/></svg>
+  </header>
+</div>
+
+<main class="layout wrap" id="main">
+  <aside class="filters" id="filters" aria-label="Filters">
+    <div class="filters__head">
+      <h2 class="filters__title">Filter startups</h2>
+      <button type="button" class="linkbtn" id="clear-filters" hidden>Clear all</button>
+      <button type="button" class="iconbtn filters__close" id="close-filters" aria-label="Close filters">×</button>
+    </div>
+    <div class="field">
+      <label class="sr-only" for="q">Search</label>
+      <input id="q" type="search" placeholder="Search sector, focus or description" autocomplete="off" enterkeyhint="search">
+    </div>
+    <div class="fgroups" id="filter-groups"></div>
+    <label class="switch">
+      <input type="checkbox" id="picks-only">
+      <span class="switch__ui" aria-hidden="true"></span>
+      <span class="switch__label">My picks only</span>
+      <span class="chip__count" id="picks-only-count">0</span>
+    </label>
+    <div class="filters__foot">
+      <button type="button" class="btn btn--navy" id="apply-filters">Show <span id="apply-count">all</span> startups</button>
+    </div>
+  </aside>
+
+  <section class="results" aria-labelledby="results-title">
+    <h2 class="sr-only" id="results-title">Startups</h2>
+    <div class="results__bar">
+      <p class="results__count" id="results-count" aria-live="polite"></p>
+      <button type="button" class="btn btn--ghost filters-toggle" id="open-filters" aria-controls="filters" aria-expanded="false">Filters <span class="badge" id="filter-badge" hidden></span></button>
+    </div>
+    <p class="notice" id="sent-notice" hidden></p>
+    <ol class="cards" id="cards"></ol>
+    <div class="empty" id="empty" hidden>
+      <p><strong>No startups match these filters.</strong></p>
+      <button type="button" class="btn btn--ghost" id="empty-clear">Clear all filters</button>
+    </div>
+  </section>
+</main>
+
+<footer class="foot wrap">
+  <p class="tagline">THE <b>SMART</b> WAY TO BUILD A <b>STARTUP</b></p>
+  <a href="https://smartupacademy.org" target="_blank" rel="noopener">smartupacademy.org</a>
+</footer>
+
+<div class="tray" id="tray" hidden>
+  <div class="tray__inner">
+    <div class="tray__info">
+      <span class="tray__count" id="tray-count"></span>
+      <span class="tray__codes" id="tray-codes"></span>
+    </div>
+    <button type="button" class="btn btn--orange" id="open-review">Review &amp; send</button>
+  </div>
+</div>
+
+<div class="scrim scrim--filters" id="filters-scrim" hidden></div>
+<div class="scrim" id="scrim" hidden></div>
+<div class="drawer" id="review" role="dialog" aria-modal="true" aria-labelledby="review-title" hidden>
+  <div class="drawer__head">
+    <h2 id="review-title" tabindex="-1">Your meeting requests</h2>
+    <button type="button" class="iconbtn" id="close-review" aria-label="Close">×</button>
+  </div>
+  <form class="drawer__body" id="review-form" novalidate>
+    <section class="block" aria-labelledby="picks-title">
+      <h3 class="block__title" id="picks-title">Founders you’d like to meet <span id="review-count"></span></h3>
+      <ul class="picklist" id="picklist"></ul>
+      <p class="hint" id="picklist-empty" hidden>You haven’t picked any startups yet. Close this panel and choose “I’d like to meet” on the ones you want.</p>
+    </section>
+    <section class="block" id="dates-block" aria-labelledby="dates-title" hidden>
+      <h3 class="block__title" id="dates-title">Which roundtable dates work for you? <span class="req" aria-hidden="true">*</span></h3>
+      <p class="hint" id="dates-hint">Choose every date you can make. It’s fine if only some of them work for you.</p>
+      <div class="datelist" id="datelist" role="group" aria-labelledby="dates-title" aria-describedby="dates-hint"></div>
+      <p class="field__err" id="err-dates"></p>
+    </section>
+    <section class="block" aria-labelledby="details-title">
+      <h3 class="block__title" id="details-title">Your details</h3>
+      <div class="grid2">
+        <div class="field">
+          <label for="d-name">Full name <span class="req" aria-hidden="true">*</span></label>
+          <input id="d-name" data-field="name" autocomplete="name" maxlength="120" required>
+          <p class="field__err" id="err-name"></p>
+        </div>
+        <div class="field">
+          <label for="d-email">Email <span class="req" aria-hidden="true">*</span></label>
+          <input id="d-email" data-field="email" type="email" autocomplete="email" maxlength="200" required>
+          <p class="field__err" id="err-email"></p>
+        </div>
+        <div class="field">
+          <label for="d-phone">Phone <span class="opt">(optional)</span></label>
+          <input id="d-phone" data-field="phone" type="tel" autocomplete="tel" maxlength="40">
+          <p class="field__err" id="err-phone"></p>
+        </div>
+        <div class="field">
+          <label for="d-firm">Firm / Fund / Angel <span class="req" aria-hidden="true">*</span></label>
+          <input id="d-firm" data-field="firm" autocomplete="organization" maxlength="160" required>
+          <p class="field__err" id="err-firm"></p>
+        </div>
+      </div>
+    </section>
+    <section class="block">
+      <div class="field">
+        <label for="d-general">Anything else we should know? <span class="opt">(optional)</span></label>
+        <textarea id="d-general" rows="3" maxlength="4000" placeholder="For example, when it’s best to reach you"></textarea>
+        <p class="field__err" id="err-generalNote"></p>
+      </div>
+    </section>
+    <p class="privacy">Only the SmartUp team sees your picks and notes.</p>
+  </form>
+  <div class="drawer__foot" id="review-foot">
+    <p class="form-error" id="form-error" role="alert"></p>
+    <button type="submit" form="review-form" class="btn btn--orange btn--lg" id="submit">Send to SmartUp</button>
+  </div>
+  <div class="done" id="done" hidden>
+    <span class="done__badge" aria-hidden="true"></span>
+    <h2 id="done-title" tabindex="-1">Thank you!</h2>
+    <p>We received your picks: <span class="done__codes" id="done-codes"></span></p>
+    <div id="done-dates-line">
+      <p>Dates that work for you:</p>
+      <ul class="done__dates" id="done-dates"></ul>
+    </div>
+    <p>The SmartUp team will contact you to set up a call. You can come back to this link at any time to change your picks and send them again.</p>
+    <button type="button" class="btn btn--navy" id="done-close">Back to the startups</button>
+  </div>
+</div>
+
+<script>window.AR_API = "https://script.google.com/macros/s/AKfycbzOeIq_qDn4MvnHWf3MAAsfOCoSig8bBuwnOc4yurZHmu0INkpXEgqS0tLNez5CDZ8k/exec";</script>
+<script>window.AR_DATA = {"startups":[{"id":1,"code":"#01","label":"Hospitality Technology","sector":"Hospitality Technology","focus":"","description":"AI-driven software that automates hotel operations across guest service, workforce coordination and day-to-day execution.","stage":"Paying Customers","year":2021,"funding":"Seed","employees":4},{"id":2,"code":"#02","label":"Marketing Technology / BI","sector":"Marketing Technology","focus":"BI","description":"Decision-support software for marketing teams that analyzes market, competitor and customer signals and turns them into campaign recommendations.","stage":"MVP","year":2025,"funding":"Pre-Seed","employees":6},{"id":3,"code":"#03","label":"Enterprise AI Infrastructure","sector":"Enterprise AI Infrastructure","focus":"","description":"Infrastructure software that gives enterprises real-time control over autonomous AI agents, including budgets, permissions and auditability.","stage":"MVP","year":2026,"funding":"Seed","employees":6},{"id":4,"code":"#04","label":"Education Technology","sector":"Education Technology","focus":"","description":"AI learning platform that combines course materials and academic systems to provide personalized study plans, tutoring, practice and adaptive learning.","stage":"Paying Customers","year":2025,"funding":"No Funding","employees":7},{"id":5,"code":"#05","label":"Semiconductor / AI Engineering","sector":"Semiconductor","focus":"AI Engineering","description":"AI engineering platform for chip-design workflows that automates complex tasks across design, verification and documentation.","stage":"Paying Customers","year":2026,"funding":"No Funding","employees":5},{"id":6,"code":"#06","label":"Enterprise Operations / AI","sector":"Enterprise Operations","focus":"AI","description":"Governance software for operations-heavy organizations that helps manage and oversee execution across complex workflows.","stage":"Paying Customers","year":2025,"funding":"Pre-Seed","employees":12},{"id":7,"code":"#07","label":"Textile / Industrial Deep Tech","sector":"Textile","focus":"Industrial Deep Tech","description":"Advanced textile manufacturing technology focused on new automated methods for producing and customizing garments.","stage":"MVP","year":2023,"funding":"Pre-Seed","employees":6},{"id":8,"code":"#08","label":"Game Development Tools","sector":"Game Development Tools","focus":"","description":"Production-intelligence software for game studios that detects cross-team changes early and highlights downstream impact on development work.","stage":"MVP","year":2026,"funding":"Pre-Seed","employees":2},{"id":9,"code":"#09","label":"Sales Technology","sector":"Sales Technology","focus":"","description":"B2B sales software that helps teams create pipeline by identifying and activating warm relationship paths.","stage":"Paying Customers","year":2026,"funding":"No Funding","employees":6},{"id":10,"code":"#10","label":"Hospitality / Revenue Management","sector":"Hospitality Tech","focus":"Revenue Management","description":"Software that helps hotels monetize last-minute unsold inventory and improve room revenue.","stage":"Paying Customers","year":2026,"funding":"No Funding","employees":3},{"id":11,"code":"#11","label":"Sales Technology / AI","sector":"Sales Technology","focus":"AI","description":"AI-based lead qualification and routing software that scores inbound leads and helps sales teams prioritize follow-up.","stage":"MVP","year":2026,"funding":"Pre-Seed","employees":1},{"id":12,"code":"#12","label":"Recruiting Technology","sector":"Recruiting Technology","focus":"","description":"Recruiting platform for independent recruiters that improves candidate matching and enables secure collaboration around unused talent pipelines.","stage":"MVP","year":2026,"funding":"No Funding","employees":3},{"id":13,"code":"#13","label":"Digital Health","sector":"Digital Health","focus":"","description":"AI-enabled care coordination platform that turns patient, benefits and social-needs data into ongoing actions between clinical visits.","stage":"POC","year":2026,"funding":"Seed","employees":5},{"id":14,"code":"#14","label":"Hospitality / Events","sector":"Hospitality Tech","focus":"Events","description":"Operating and venture business in nightlife, restaurants, corporate events and festival production.","stage":"MVP","year":2025,"funding":"Pre-Seed","employees":15},{"id":15,"code":"#15","label":"Digital Health / Telehealth","sector":"Digital Health","focus":"Telehealth","description":"Digital healthcare platform built around asynchronous care, transparent pricing, clinician messaging and follow-up for underserved populations.","stage":"MVP","year":2026,"funding":"Pre-Seed","employees":null},{"id":16,"code":"#16","label":"Home Services Marketplace","sector":"Home Services Marketplace","focus":"","description":"Marketplace for home services with competitive bidding, digital payments and separate experiences for customers and service professionals.","stage":"MVP","year":2025,"funding":"Pre-Seed","employees":2},{"id":17,"code":"#17","label":"FinTech / Fraud Prevention","sector":"FinTech","focus":"Fraud Prevention","description":"Fraud-prevention software for financial institutions that detects behavioral signs of manipulation during banking sessions and streamlines investigation workflows.","stage":"POC","year":2025,"funding":"Pre-Seed","employees":2},{"id":18,"code":"#18","label":"Clinical Trials / Digital Health","sector":"Clinical Trials","focus":"Digital Health","description":"Clinical-trial operations software that turns complex protocols into guided digital workflows to reduce errors and improve compliance at research sites.","stage":"Paying Customers","year":2022,"funding":"No Funding","employees":null},{"id":19,"code":"#19","label":"Defense Training Technology","sector":"Defense Training Technology","focus":"","description":"Simulation and training platform that measures team performance during mission rehearsals and provides objective readiness data.","stage":"Paying Customers","year":2020,"funding":"No Funding","employees":10},{"id":20,"code":"#20","label":"Digital Health","sector":"Digital Health","focus":"","description":"AI platform designed to help patients manage treatment-related challenges, improve adherence and reduce side effects.","stage":"MVP","year":2026,"funding":"No Funding","employees":3},{"id":21,"code":"#21","label":"Enterprise Automation","sector":"Enterprise Automation","focus":"","description":"No-code AI automation platform for building agent-based workflows that reduce repetitive operational work.","stage":"MVP","year":2026,"funding":"No Funding","employees":3},{"id":22,"code":"#22","label":"Communications Software","sector":"Communications Software","focus":"","description":"Communications platform for cloud, on-premise and hybrid voice systems, focused on reducing infrastructure and maintenance complexity.","stage":"Paying Customers","year":2018,"funding":"No Funding","employees":2},{"id":23,"code":"#23","label":"Enterprise AI Infrastructure","sector":"Enterprise AI Infrastructure","focus":"","description":"Collaboration layer for enterprise AI deployments, designed to coordinate people, tools and AI systems.","stage":"Paying Customers","year":2026,"funding":"No Funding","employees":3},{"id":24,"code":"#24","label":"Consumer AI / Social","sector":"Consumer AI","focus":"Social","description":"AI-based social companion that participates in conversations and helps users discover relevant people, communities and services.","stage":"Paying Customers","year":2024,"funding":"No Funding","employees":1},{"id":25,"code":"#25","label":"Medical Devices / MedTech","sector":"Medical Devices","focus":"MedTech","description":"Medical-device solution that automates patient repositioning on existing hospital beds to reduce pressure injuries and nursing workload.","stage":"MVP","year":2026,"funding":"Pre-Seed","employees":2},{"id":26,"code":"#26","label":"Cybersecurity","sector":"Cybersecurity","focus":"","description":"Cybersecurity company providing technology for secure enterprise and communications environments.","stage":"Paying Customers","year":2011,"funding":"Seed","employees":15},{"id":27,"code":"#27","label":"Hospitality Technology","sector":"Hospitality Technology","focus":"","description":"AI-driven software that automates hotel operations across guest service, workforce coordination and day-to-day execution.","stage":"Paying Customers","year":2021,"funding":"No Funding","employees":4},{"id":28,"code":"#28","label":"Recruiting Technology","sector":"Recruiting Technology","focus":"","description":"AI-based recruiting software that helps teams streamline candidate screening and hiring workflows.","stage":"MVP","year":2026,"funding":"No Funding","employees":2},{"id":29,"code":"#29","label":"PropTech / Planning","sector":"PropTech","focus":"Planning","description":"Planning-intelligence platform that combines zoning, geospatial and design data to identify conflicts early in real-estate development.","stage":"POC","year":2025,"funding":"No Funding","employees":3},{"id":30,"code":"#30","label":"Construction Technology","sector":"Construction Technology","focus":"","description":"Project-management software for civil engineering and infrastructure, covering tender analysis, estimating, planning and execution tracking.","stage":"Paying Customers","year":2026,"funding":"No Funding","employees":2},{"id":31,"code":"#31","label":"HR Technology / Skills Assessment","sector":"HR Technology","focus":"Skills Assessment","description":"Skills-assessment platform that uses realistic work simulations to measure job performance, including human and AI-assisted workflows.","stage":"POC","year":2026,"funding":"No Funding","employees":2},{"id":32,"code":"#32","label":"PropTech","sector":"PropTech","focus":"","description":"Real-estate marketplace concept designed to simplify property search and listing through a more structured digital commerce experience.","stage":"MVP","year":2025,"funding":"Pre-Seed","employees":3},{"id":33,"code":"#33","label":"FinTech / Trading","sector":"FinTech","focus":"Trading","description":"Technology for distributed algorithmic trading, with controls for collaboration and accountability across trading operations.","stage":"POC","year":2026,"funding":"Seed","employees":3},{"id":34,"code":"#34","label":"B2B Product Consulting","sector":"B2B Product Consulting","focus":"","description":"Product consulting service that helps technology companies improve commercialization, positioning and revenue generation.","stage":"Paying Customers","year":2025,"funding":"No Funding","employees":1},{"id":35,"code":"#35","label":"Healthcare Marketplace","sector":"Healthcare Marketplace","focus":"","description":"Marketplace that matches healthcare professionals who need clinical space with clinics that have unused rooms, based on location and availability.","stage":"Validation","year":2026,"funding":"No Funding","employees":3},{"id":36,"code":"#36","label":"Organizational Consulting","sector":"Organizational Consulting","focus":"","description":"Consulting practice focused on organizational change, leadership development, culture, talent processes and management training.","stage":"Paying Customers","year":2025,"funding":"No Funding","employees":null},{"id":37,"code":"#37","label":"Education Technology / Storytelling","sector":"Education Technology","focus":"Storytelling","description":"AI-assisted storytelling platform used for learning, reflection, legacy creation and therapeutic or educational experiences.","stage":"POC","year":2024,"funding":"Pre-Seed","employees":2},{"id":38,"code":"#38","label":"Cybersecurity / Access Control","sector":"Cybersecurity","focus":"Access Control","description":"Authorization layer for sensitive digital resources that determines whether a verified person is allowed to access specific protected data or systems.","stage":"POC","year":2025,"funding":"Seed","employees":3},{"id":39,"code":"#39","label":"Services Marketplace / AI","sector":"Services Marketplace","focus":"AI","description":"AI-powered marketplace that matches customers with service providers using fit, availability, location and verified information.","stage":"MVP","year":2026,"funding":"Pre-Seed","employees":1},{"id":40,"code":"#40","label":"Innovation Education","sector":"Innovation Education","focus":"","description":"Education and innovation initiative focused on AI, entrepreneurship, sustainability and future skills, with cross-community programs and organizational advisory work.","stage":"POC","year":2026,"funding":"Pre-Seed","employees":5},{"id":41,"code":"#41","label":"Enterprise Automation / Process Intelligence","sector":"Enterprise Automation","focus":"Process Intelligence","description":"Process-intelligence platform that captures how work happens across business applications and turns it into context for AI agents and automation tools.","stage":"Validation","year":null,"funding":"No Funding","employees":2},{"id":42,"code":"#42","label":"Enterprise AI Security","sector":"Enterprise AI Security","focus":"","description":"Security-architecture software that helps organizations review and approve the risks of new AI agents, integrations and AI-enabled business changes.","stage":"Validation","year":2026,"funding":"No Funding","employees":2},{"id":43,"code":"#43","label":"Speech Therapy / Training","sector":"Speech Therapy","focus":"Training","description":"Speech-therapy training method that uses rhythm and vocal sound exercises to improve articulation, voice and fluency through professional training programs.","stage":"POC","year":2016,"funding":"No Funding","employees":3},{"id":44,"code":"#44","label":"Emergency Response Technology","sector":"Emergency Response Technology","focus":"","description":"Emergency-response infrastructure technology designed to reduce the time it takes first responders to locate and enter buildings during urgent incidents.","stage":"POC","year":2016,"funding":"No Funding","employees":null},{"id":45,"code":"#45","label":"Pet Tech / AgTech","sector":"Pet Tech","focus":"AgTech","description":"Animal-health hardware concept combining location tracking and AI-enabled health monitoring in an implantable device.","stage":"Validation","year":2026,"funding":"No Funding","employees":2},{"id":46,"code":"#46","label":"Not provided","sector":"Not provided","focus":"","description":"Company details were not sufficiently provided to create a useful anonymous summary.","stage":"Paying Customers","year":2026,"funding":"No Funding","employees":null},{"id":47,"code":"#47","label":"Developer Tools / Cloud Infrastructure","sector":"Developer Tools","focus":"Cloud Infrastructure","description":"Developer infrastructure that speeds up software builds and CI by managing shared build caches and surfacing cache-performance insights.","stage":"MVP","year":2026,"funding":"No Funding","employees":1},{"id":48,"code":"#48","label":"AI Developer Security","sector":"AI Developer Security","focus":"","description":"Security tooling designed to protect and control AI coding agents during software-development workflows.","stage":"MVP","year":2026,"funding":"No Funding","employees":2},{"id":49,"code":"#49","label":"Gaming Accessibility","sector":"Gaming Accessibility","focus":"","description":"Desktop accessibility software that provides live captions over games and applications so deaf and hard-of-hearing users can participate in voice-based interactions.","stage":"Selling","year":2026,"funding":"No Funding","employees":1},{"id":50,"code":"#50","label":"Cybersecurity","sector":"Cybersecurity","focus":"","description":"Endpoint security assistant that detects risky user behavior in real time and intervenes before sensitive data or systems are exposed.","stage":"Validation","year":2025,"funding":"No Funding","employees":2},{"id":51,"code":"#51","label":"B2B Project Management","sector":"B2B Project Management","focus":"","description":"Delivery-management software that helps teams detect sprint risks, blockers, dependencies and scope changes earlier.","stage":"MVP","year":2026,"funding":"No Funding","employees":1},{"id":52,"code":"#52","label":"Defense / Sensing Technology","sector":"Defense","focus":"Sensing Technology","description":"Passive sensing technology that detects and tracks airborne or surface targets using existing ambient radio signals rather than active transmission.","stage":"POC","year":2011,"funding":"Pre-Seed","employees":4},{"id":53,"code":"#53","label":"Enterprise AI Governance","sector":"Enterprise AI Governance","focus":"","description":"Enterprise AI governance platform that controls access to sensitive business context, identifies AI agents and automatically redacts protected data.","stage":"Validation","year":null,"funding":"No Funding","employees":3},{"id":54,"code":"#54","label":"HR Technology / Assessment","sector":"HR Technology","focus":"Assessment","description":"Hiring-assessment software that evaluates how candidates solve real work tasks with AI, giving managers deeper evidence of problem-solving ability.","stage":"POC","year":null,"funding":"Not provided","employees":2},{"id":55,"code":"#55","label":"Enterprise Decision Intelligence","sector":"Enterprise Decision Intelligence","focus":"","description":"Enterprise AI decision engine that analyzes fragmented business data, diagnoses operational issues and recommends actions tied to financial impact.","stage":"Ideation","year":2026,"funding":"Not provided","employees":5},{"id":56,"code":"#56","label":"Consumer AI / Food Management","sector":"Consumer AI","focus":"Food Management","description":"Consumer software that helps households reduce food waste and grocery costs through a connected kitchen-management workflow.","stage":"MVP","year":2026,"funding":"No Funding","employees":1},{"id":57,"code":"#57","label":"Consumer Products","sector":"Consumer Products","focus":"","description":"Consumer products company developing at-home cleaning solutions for jewelry.","stage":"Paying Customers","year":2022,"funding":"No Funding","employees":1},{"id":58,"code":"#58","label":"Music Technology","sector":"Music Technology","focus":"","description":"AI-based audio-visualization software that converts music and sound into real-time visual representations using signal processing and machine learning.","stage":"MVP","year":2024,"funding":"No Funding","employees":1}],"dates":["Sunday, Oct. 11, 2026 · 13:30–14:30","Sunday, Oct. 18, 2026 · 13:30–14:30","Sunday, Oct. 25, 2026 · 13:30–14:30","Sunday, Nov. 1, 2026 · 13:30–14:30","Sunday, Nov. 8, 2026 · 13:30–14:30","Sunday, Nov. 15, 2026 · 13:30–14:30"]};</script>
+<script>/**
+ * Investor page logic: filter buckets, matching, facet counts and the investor's local draft.
+ * Pure functions, used by Investor.html (global ARInvestor) and by the Node tests.
+ */
+var ARInvestor = (function () {
+  'use strict';
+
+  var STAGES = ['Ideation', 'Validation', 'POC', 'MVP', 'Selling', 'Paying Customers'];
+  var FUNDING = ['No Funding', 'Pre-Seed', 'Seed'];
+  var YEAR_BUCKETS = [
+    { key: '2026', label: '2026' },
+    { key: '2025', label: '2025' },
+    { key: '2020-2024', label: '2020–2024' },
+    { key: 'pre-2020', label: 'Before 2020' }
+  ];
+  var TEAM_BUCKETS = [
+    { key: '1', label: '1' },
+    { key: '2-3', label: '2–3' },
+    { key: '4-6', label: '4–6' },
+    { key: '7+', label: '7+' },
+    { key: 'na', label: 'Not specified' }
+  ];
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function has(list, value) { return list.indexOf(value) !== -1; }
+  function str(value) { return typeof value === 'string' ? value : ''; }
+
+  function yearBucket(year) {
+    if (year == null) return null;
+    if (year >= 2026) return '2026';
+    if (year === 2025) return '2025';
+    if (year >= 2020) return '2020-2024';
+    return 'pre-2020';
+  }
+
+  function teamBucket(n) {
+    if (n == null) return 'na';
+    if (n <= 1) return '1';
+    if (n <= 3) return '2-3';
+    if (n <= 6) return '4-6';
+    return '7+';
+  }
+
+  function teamLabel(n) { return n == null ? 'Not specified' : String(n); }
+  function stageIndex(stage) { return STAGES.indexOf(stage); }
+
+  function emptyFilters() {
+    return { q: '', sectors: [], stages: [], funding: [], years: [], teams: [], picksOnly: false };
+  }
+
+  function searchText(s) {
+    return [s.code, s.label, s.sector, s.focus, s.description].join(' ').toLowerCase();
+  }
+
+  // `skip` names one filter group to leave out; facet counts use it so a group's own options stay selectable.
+  function matches(s, f, pickedIds, skip) {
+    if (f.q) {
+      var text = searchText(s);
+      var words = f.q.toLowerCase().split(/\s+/);
+      for (var i = 0; i < words.length; i++) {
+        if (words[i] && text.indexOf(words[i]) === -1) return false;
+      }
+    }
+    if (skip !== 'sectors' && f.sectors.length && !has(f.sectors, s.sector)) return false;
+    if (skip !== 'stages' && f.stages.length && !has(f.stages, s.stage)) return false;
+    if (skip !== 'funding' && f.funding.length && !has(f.funding, s.funding)) return false;
+    if (skip !== 'years' && f.years.length && !has(f.years, yearBucket(s.year))) return false;
+    if (skip !== 'teams' && f.teams.length && !has(f.teams, teamBucket(s.employees))) return false;
+    if (skip !== 'picksOnly' && f.picksOnly && !has(pickedIds, s.id)) return false;
+    return true;
+  }
+
+  function filterStartups(startups, f, pickedIds) {
+    var ids = pickedIds || [];
+    return startups.filter(function (s) { return matches(s, f, ids); });
+  }
+
+  function facetCounts(startups, f, pickedIds) {
+    var ids = pickedIds || [];
+    var out = { sectors: {}, stages: {}, funding: {}, years: {}, teams: {}, picksOnly: 0 };
+    function bump(group, key) { out[group][key] = (out[group][key] || 0) + 1; }
+    startups.forEach(function (s) {
+      if (matches(s, f, ids, 'sectors')) bump('sectors', s.sector);
+      if (matches(s, f, ids, 'stages')) bump('stages', s.stage);
+      if (matches(s, f, ids, 'funding')) bump('funding', s.funding);
+      var year = yearBucket(s.year);
+      if (year && matches(s, f, ids, 'years')) bump('years', year);
+      if (matches(s, f, ids, 'teams')) bump('teams', teamBucket(s.employees));
+      if (has(ids, s.id) && matches(s, f, ids, 'picksOnly')) out.picksOnly += 1;
+    });
+    return out;
+  }
+
+  function sectorOptions(startups) {
+    var counts = {};
+    startups.forEach(function (s) { counts[s.sector] = (counts[s.sector] || 0) + 1; });
+    var all = Object.keys(counts)
+      .map(function (name) { return { name: name, count: counts[name] }; })
+      .sort(function (a, b) { return b.count - a.count || a.name.localeCompare(b.name); });
+    return {
+      common: all.filter(function (o) { return o.count >= 2; }),
+      more: all.filter(function (o) { return o.count < 2; })
+    };
+  }
+
+  function toggle(list, value) {
+    return has(list, value) ? list.filter(function (v) { return v !== value; }) : list.concat([value]);
+  }
+
+  function activeFilterCount(f) {
+    return (f.q ? 1 : 0) + f.sectors.length + f.stages.length + f.funding.length + f.years.length + f.teams.length + (f.picksOnly ? 1 : 0);
+  }
+
+  // Cleans a draft read from localStorage: only startups and meeting dates still on offer, no duplicates, strings only.
+  function pruneDraft(draft, startups, dates) {
+    var listed = {};
+    startups.forEach(function (s) { listed[s.id] = true; });
+    var d = draft && typeof draft === 'object' ? draft : {};
+    var seen = {};
+    var picks = (Array.isArray(d.picks) ? d.picks : []).reduce(function (acc, p) {
+      var id = p ? Number(p.id) : 0;
+      if (!id || !listed[id] || seen[id]) return acc;
+      seen[id] = true;
+      acc.push({ id: id, note: str(p.note) });
+      return acc;
+    }, []);
+    var details = d.details && typeof d.details === 'object' ? d.details : {};
+    return {
+      picks: picks,
+      details: { name: str(details.name), email: str(details.email), phone: str(details.phone), firm: str(details.firm) },
+      dates: orderDates(Array.isArray(d.dates) ? d.dates : [], dates || []),
+      generalNote: str(d.generalNote),
+      submittedAt: typeof d.submittedAt === 'string' ? d.submittedAt : null
+    };
+  }
+
+  // The chosen dates in the order they are offered, without dates that are no longer offered.
+  function orderDates(chosen, offered) {
+    return offered.filter(function (date) { return has(chosen, date); });
+  }
+
+  function validateDetails(details) {
+    var errors = {};
+    var name = str(details.name).trim();
+    var email = str(details.email).trim();
+    if (!name) errors.name = 'Please enter your full name.';
+    if (!email) errors.email = 'Please enter your email.';
+    else if (!EMAIL_RE.test(email)) errors.email = 'Please enter a valid email address.';
+    if (!str(details.firm).trim()) errors.firm = 'Please enter your firm or fund, or “Angel”.';
+    return errors;
+  }
+
+  function validateDates(chosen, offered) {
+    return offered.length && !orderDates(chosen, offered).length ? { dates: 'Please choose at least one date.' } : {};
+  }
+
+  function buildPayload(draft) {
+    return {
+      investor: { name: draft.details.name, email: draft.details.email, phone: draft.details.phone, firm: draft.details.firm },
+      picks: draft.picks.map(function (p) { return { id: p.id, note: p.note }; }),
+      dates: draft.dates.slice(),
+      generalNote: draft.generalNote
+    };
+  }
+
+  return {
+    STAGES: STAGES, FUNDING: FUNDING, YEAR_BUCKETS: YEAR_BUCKETS, TEAM_BUCKETS: TEAM_BUCKETS,
+    yearBucket: yearBucket, teamBucket: teamBucket, teamLabel: teamLabel, stageIndex: stageIndex,
+    emptyFilters: emptyFilters, matches: matches, filterStartups: filterStartups, facetCounts: facetCounts,
+    sectorOptions: sectorOptions, toggle: toggle, activeFilterCount: activeFilterCount,
+    pruneDraft: pruneDraft, orderDates: orderDates, validateDetails: validateDetails, validateDates: validateDates, buildPayload: buildPayload
+  };
+})();
+
+if (typeof module !== 'undefined' && module.exports) { module.exports = ARInvestor; }</script>
+<script>
+(function () {
+  'use strict';
+  var L = window.ARInvestor;
+  // On investors.smartupacademy.org this page is a static copy (tools/site.mjs): AR_API is the web app URL, which
+  // takes the submissions and serves the current list. Inside Apps Script, google.script.run does both instead.
+  var API = window.AR_API || '';
+  var STARTUPS, BY_ID, DATES;
+  setData(window.AR_DATA);
+
+  function setData(data) {
+    STARTUPS = (data && data.startups) || [];
+    DATES = (data && data.dates) || [];
+    BY_ID = {};
+    STARTUPS.forEach(function (s) { BY_ID[s.id] = s; });
+  }
+  var DRAFT_KEY = 'ar-investor-draft-v1';
+  var FIELD_INPUTS = { name: 'd-name', email: 'd-email', phone: 'd-phone', firm: 'd-firm', generalNote: 'd-general' };
+
+  var state = { filters: L.emptyFilters(), draft: L.pruneDraft(readDraft(), STARTUPS, DATES), submitting: false, lastFocus: null };
+  var cards = {};
+  var chips = [];
+  var dateBoxes = [];
+
+  function $(id) { return document.getElementById(id); }
+  function el(tag, cls, text) {
+    var node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text != null) node.textContent = text;
+    return node;
+  }
+  function byId(a, b) { return a.id - b.id; }
+
+  /* ---------- draft, kept in this browser only ---------- */
+  function readDraft() {
+    try { return JSON.parse(window.localStorage.getItem(DRAFT_KEY) || 'null'); } catch (e) { return null; }
+  }
+  var saveTimer = null;
+  function saveDraft() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function () {
+      try { window.localStorage.setItem(DRAFT_KEY, JSON.stringify(state.draft)); } catch (e) { /* storage blocked: keep it in memory */ }
+    }, 250);
+  }
+  function pickedIds() { return state.draft.picks.map(function (p) { return p.id; }); }
+  function findPick(id) {
+    for (var i = 0; i < state.draft.picks.length; i++) if (state.draft.picks[i].id === id) return state.draft.picks[i];
+    return null;
+  }
+
+  /* ---------- startup cards (built once, then shown or hidden) ---------- */
+  function buildCards() {
+    var frag = document.createDocumentFragment();
+    STARTUPS.forEach(function (s) {
+      var li = el('li', 'card');
+      li.id = 'startup-' + s.id;
+
+      var main = el('div', 'card__main');
+      var head = el('div', 'card__head');
+      head.appendChild(el('span', 'code card__num', s.code));
+      var heading = el('div', 'card__heading');
+      if (s.focus) heading.appendChild(el('p', 'card__sector', s.sector));
+      heading.appendChild(el('h3', 'card__title', s.focus || s.label));
+      head.appendChild(heading);
+      main.appendChild(head);
+      main.appendChild(el('p', 'card__desc', s.description));
+
+      var side = el('div', 'card__side');
+      side.appendChild(stageBlock(s.stage));
+      var facts = el('dl', 'facts');
+      facts.appendChild(fact('Founded', s.year == null ? 'Not specified' : String(s.year)));
+      facts.appendChild(fact('Funding', s.funding || 'Not specified'));
+      facts.appendChild(fact('Employees', L.teamLabel(s.employees)));
+      side.appendChild(facts);
+      var btn = el('button', 'meet');
+      btn.type = 'button';
+      btn.dataset.id = String(s.id);
+      btn.setAttribute('aria-pressed', 'false');
+      btn.setAttribute('aria-label', 'I’d like to meet ' + s.code + ' ' + (s.focus || s.label));
+      btn.appendChild(el('span', 'meet__icon'));
+      var btnLabel = el('span', 'meet__label', 'I’d like to meet');
+      btn.appendChild(btnLabel);
+      side.appendChild(btn);
+
+      var note = el('div', 'card__note');
+      note.hidden = true;
+      var label = el('label', null, 'Note for the SmartUp team ');
+      label.htmlFor = 'note-' + s.id;
+      label.appendChild(el('span', 'opt', '(optional)'));
+      var ta = el('textarea');
+      ta.id = 'note-' + s.id;
+      ta.rows = 2;
+      ta.maxLength = 2000;
+      ta.dataset.id = String(s.id);
+      ta.placeholder = 'For example: “Not sure yet, but I’d love to set a call”';
+      note.appendChild(label);
+      note.appendChild(ta);
+
+      li.appendChild(main);
+      li.appendChild(side);
+      li.appendChild(note);
+      frag.appendChild(li);
+      cards[s.id] = { li: li, btn: btn, btnLabel: btnLabel, note: note, ta: ta };
+    });
+    $('cards').appendChild(frag);
+  }
+
+  function stageBlock(stage) {
+    var idx = L.stageIndex(stage);
+    var wrap = el('div', 'stage');
+    wrap.appendChild(el('span', 'stage__label', 'Product stage'));
+    wrap.appendChild(el('span', 'stage__value', stage || 'Not specified'));
+    if (idx >= 0) {
+      var track = el('span', 'stage__track');
+      track.setAttribute('aria-hidden', 'true');
+      L.STAGES.forEach(function (name, i) {
+        var seg = el('i', i <= idx ? 'on' : null);
+        seg.title = name;
+        track.appendChild(seg);
+      });
+      wrap.appendChild(track);
+      wrap.appendChild(el('span', 'stage__steps', 'Step ' + (idx + 1) + ' of ' + L.STAGES.length));
+    }
+    return wrap;
+  }
+
+  function fact(label, value) {
+    var row = el('div', 'fact');
+    row.appendChild(el('dt', null, label));
+    row.appendChild(el('dd', null, value));
+    return row;
+  }
+
+  /* ---------- meeting dates (the Settings tab of the sheet) ---------- */
+  function buildDates() {
+    $('dates-block').hidden = !DATES.length;
+    DATES.forEach(function (date) {
+      var label = el('label', 'datepick');
+      var box = el('input');
+      box.type = 'checkbox';
+      box.value = date;
+      label.appendChild(box);
+      label.appendChild(el('span', null, date));
+      $('datelist').appendChild(label);
+      dateBoxes.push(box);
+    });
+  }
+
+  function onDatesChange() {
+    state.draft.dates = dateBoxes.filter(function (b) { return b.checked; }).map(function (b) { return b.value; });
+    saveDraft();
+    if (state.draft.dates.length) clearDatesError();
+  }
+
+  function clearDatesError() {
+    $('err-dates').textContent = '';
+    $('datelist').classList.remove('is-invalid');
+    $('datelist').setAttribute('aria-describedby', 'dates-hint');
+  }
+
+  /* ---------- filters (the doc's columns) ---------- */
+  function asOptions(values) { return values.map(function (v) { return { value: v, label: v }; }); }
+
+  function filterGroups() {
+    var sectors = L.sectorOptions(STARTUPS);
+    return [
+      { key: 'sectors', title: 'Sector', options: asOptions(sectors.common.map(function (o) { return o.name; })),
+        more: asOptions(sectors.more.map(function (o) { return o.name; })) },
+      { key: 'stages', title: 'Product Stage', options: asOptions(L.STAGES) },
+      { key: 'funding', title: 'Funding Stage', options: asOptions(L.FUNDING) },
+      { key: 'years', title: 'Year Founded', options: L.YEAR_BUCKETS.map(function (b) { return { value: b.key, label: b.label }; }) },
+      { key: 'teams', title: '# Employees', options: L.TEAM_BUCKETS.map(function (b) { return { value: b.key, label: b.label }; }) }
+    ];
+  }
+
+  function buildFilters() {
+    var root = $('filter-groups');
+    filterGroups().forEach(function (g) {
+      var fs = el('fieldset', 'fgroup');
+      fs.appendChild(el('legend', 'fgroup__title', g.title));
+      var row = el('div', 'chips');
+      g.options.forEach(function (o) { row.appendChild(chip(g.key, o)); });
+      fs.appendChild(row);
+      if (g.more && g.more.length) {
+        var more = el('div', 'chips');
+        more.id = 'more-' + g.key;
+        more.hidden = true;
+        g.more.forEach(function (o) { more.appendChild(chip(g.key, o)); });
+        var toggle = el('button', 'linkbtn', 'More sectors (' + g.more.length + ')');
+        toggle.type = 'button';
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-controls', more.id);
+        toggle.addEventListener('click', function () {
+          more.hidden = !more.hidden;
+          toggle.setAttribute('aria-expanded', String(!more.hidden));
+          toggle.textContent = more.hidden ? 'More sectors (' + g.more.length + ')' : 'Fewer sectors';
+        });
+        fs.appendChild(more);
+        fs.appendChild(toggle);
+      }
+      root.appendChild(fs);
+    });
+  }
+
+  function chip(group, option) {
+    var b = el('button', 'chip');
+    b.type = 'button';
+    b.setAttribute('aria-pressed', 'false');
+    b.appendChild(el('span', null, option.label));
+    var count = el('span', 'chip__count');
+    b.appendChild(count);
+    b.addEventListener('click', function () {
+      state.filters[group] = L.toggle(state.filters[group], option.value);
+      update();
+    });
+    chips.push({ group: group, value: option.value, btn: b, count: count });
+    return b;
+  }
+
+  function clearFilters() {
+    state.filters = L.emptyFilters();
+    $('q').value = '';
+    update();
+  }
+
+  /* ---------- rendering ---------- */
+  function update() {
+    var ids = pickedIds();
+    var f = state.filters;
+    var shown = 0;
+    STARTUPS.forEach(function (s) {
+      var visible = L.matches(s, f, ids);
+      cards[s.id].li.hidden = !visible;
+      if (visible) shown++;
+    });
+    var counts = L.facetCounts(STARTUPS, f, ids);
+    chips.forEach(function (c) {
+      var on = f[c.group].indexOf(c.value) !== -1;
+      var n = counts[c.group][c.value] || 0;
+      c.btn.setAttribute('aria-pressed', String(on));
+      c.btn.classList.toggle('is-zero', !on && n === 0);
+      c.count.textContent = String(n);
+    });
+    $('picks-only').checked = f.picksOnly;
+    $('picks-only-count').textContent = String(counts.picksOnly);
+
+    var total = STARTUPS.length;
+    renderCount(shown, total);
+    $('apply-count').textContent = shown === total ? 'all' : String(shown);
+    $('empty').hidden = shown !== 0 || total === 0;
+    var active = L.activeFilterCount(f);
+    $('clear-filters').hidden = active === 0;
+    $('filter-badge').hidden = active === 0;
+    $('filter-badge').textContent = String(active);
+  }
+
+  // "All 58 startups" or "Showing 12 of 58 startups", with the number shown large so the list reads as long.
+  function renderCount(shown, total) {
+    var p = $('results-count');
+    p.textContent = '';
+    p.classList.remove('is-message');
+    p.appendChild(document.createTextNode(shown === total ? 'All ' : 'Showing '));
+    p.appendChild(el('span', 'results__n', String(shown)));
+    p.appendChild(document.createTextNode(shown === total ? ' startups' : ' of ' + total + ' startups'));
+  }
+
+  function renderPicks() {
+    var n = state.draft.picks.length;
+    STARTUPS.forEach(function (s) {
+      var c = cards[s.id];
+      var p = findPick(s.id);
+      c.li.classList.toggle('is-picked', !!p);
+      c.btn.setAttribute('aria-pressed', String(!!p));
+      c.btnLabel.textContent = p ? 'On my list' : 'I’d like to meet';
+      c.note.hidden = !p;
+      if (p && document.activeElement !== c.ta && c.ta.value !== p.note) c.ta.value = p.note;
+    });
+    $('tray').hidden = n === 0;
+    document.body.classList.toggle('has-tray', n > 0);
+    $('tray-count').textContent = n === 1 ? '1 founder selected' : n + ' founders selected';
+    $('tray-codes').textContent = state.draft.picks.slice().sort(byId).map(function (p) { return BY_ID[p.id].code; }).join('  ');
+    $('open-review').textContent = state.draft.submittedAt ? 'Review & update' : 'Review & send';
+    renderSentNotice();
+  }
+
+  function renderSentNotice() {
+    var at = state.draft.submittedAt;
+    if (!at) { $('sent-notice').hidden = true; return; }
+    var when = '';
+    try { when = new Date(at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long' }); } catch (e) { when = ''; }
+    $('sent-notice').textContent = 'You sent your picks' + (when ? ' on ' + when : '') + '. You can change them and send again at any time.';
+    $('sent-notice').hidden = false;
+  }
+
+  function togglePick(id) {
+    if (findPick(id)) state.draft.picks = state.draft.picks.filter(function (p) { return p.id !== id; });
+    else state.draft.picks = state.draft.picks.concat([{ id: id, note: '' }]);
+    saveDraft();
+    renderPicks();
+    update();
+  }
+
+  /* ---------- filter sheet on narrow screens ---------- */
+  function openFilters() {
+    document.body.classList.add('filters-open', 'no-scroll');
+    $('filters-scrim').hidden = false;
+    $('open-filters').setAttribute('aria-expanded', 'true');
+    $('close-filters').focus();
+  }
+  function closeFilters() {
+    document.body.classList.remove('filters-open', 'no-scroll');
+    $('filters-scrim').hidden = true;
+    $('open-filters').setAttribute('aria-expanded', 'false');
+    $('open-filters').focus();
+  }
+
+  /* ---------- review & send ---------- */
+  function openReview() {
+    state.lastFocus = document.activeElement;
+    renderReview();
+    showDone(false);
+    $('review').hidden = false;
+    $('scrim').hidden = false;
+    document.body.classList.add('no-scroll');
+    $('review-title').focus();
+  }
+
+  function closeReview() {
+    $('review').hidden = true;
+    $('scrim').hidden = true;
+    document.body.classList.remove('no-scroll');
+    renderPicks();
+    update();
+    if (state.lastFocus && document.body.contains(state.lastFocus)) state.lastFocus.focus();
+  }
+
+  function renderReview() {
+    var list = $('picklist');
+    list.textContent = '';
+    var picks = state.draft.picks.slice().sort(byId);
+    $('review-count').textContent = picks.length ? '(' + picks.length + ')' : '';
+    $('picklist-empty').hidden = picks.length > 0;
+    picks.forEach(function (p) {
+      var s = BY_ID[p.id];
+      var li = el('li', 'pick');
+      var head = el('div', 'pick__head');
+      head.appendChild(el('span', 'code', s.code));
+      head.appendChild(el('span', 'pick__label', s.label));
+      var remove = el('button', 'linkbtn', 'Remove');
+      remove.type = 'button';
+      remove.dataset.remove = String(p.id);
+      remove.setAttribute('aria-label', 'Remove ' + s.code + ' ' + s.label);
+      head.appendChild(remove);
+      li.appendChild(head);
+      var ta = el('textarea', 'pick__note');
+      ta.rows = 2;
+      ta.maxLength = 2000;
+      ta.dataset.id = String(p.id);
+      ta.placeholder = 'Note for the SmartUp team (optional)';
+      ta.setAttribute('aria-label', 'Note about ' + s.code + ' ' + s.label);
+      ta.value = p.note;
+      li.appendChild(ta);
+      list.appendChild(li);
+    });
+    var d = state.draft.details;
+    $('d-name').value = d.name;
+    $('d-email').value = d.email;
+    $('d-phone').value = d.phone;
+    $('d-firm').value = d.firm;
+    $('d-general').value = state.draft.generalNote;
+    dateBoxes.forEach(function (box) { box.checked = state.draft.dates.indexOf(box.value) !== -1; });
+    setSubmitting(false);
+    $('submit').disabled = picks.length === 0;
+    clearErrors();
+  }
+
+  function clearErrors() {
+    Object.keys(FIELD_INPUTS).forEach(function (key) {
+      $('err-' + key).textContent = '';
+      $(FIELD_INPUTS[key]).removeAttribute('aria-invalid');
+      $(FIELD_INPUTS[key]).removeAttribute('aria-describedby');
+    });
+    clearDatesError();
+    $('form-error').textContent = '';
+  }
+
+  function showErrors(errors) {
+    var targets = [];
+    Object.keys(errors).forEach(function (key) {
+      if (FIELD_INPUTS[key]) {
+        var input = $(FIELD_INPUTS[key]);
+        $('err-' + key).textContent = errors[key];
+        input.setAttribute('aria-invalid', 'true');
+        input.setAttribute('aria-describedby', 'err-' + key);
+        targets.push(input);
+      } else if (key === 'dates' && dateBoxes.length) {
+        $('err-dates').textContent = errors.dates;
+        $('datelist').classList.add('is-invalid');
+        $('datelist').setAttribute('aria-describedby', 'dates-hint err-dates');
+        targets.push(dateBoxes[0]);
+      } else {
+        $('form-error').textContent = errors[key];
+      }
+    });
+    // The first field with an error, in page order.
+    targets.sort(function (a, b) { return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1; });
+    if (targets.length) targets[0].focus();
+  }
+
+  function setSubmitting(on) {
+    state.submitting = on;
+    $('submit').disabled = on;
+    $('submit').textContent = on ? 'Sending…' : (state.draft.submittedAt ? 'Send updated picks' : 'Send to SmartUp');
+  }
+
+  function showDone(on, result) {
+    $('review-form').hidden = on;
+    $('review-foot').hidden = on;
+    $('done').hidden = !on;
+    if (!on) return;
+    var first = String(result.name || '').split(' ')[0];
+    $('done-title').textContent = first ? 'Thank you, ' + first + '!' : 'Thank you!';
+    $('done-codes').textContent = (result.codes || []).join(', ');
+    $('done-dates').textContent = '';
+    (result.dates || []).forEach(function (d) { $('done-dates').appendChild(el('li', null, d)); });
+    $('done-dates-line').hidden = !(result.dates && result.dates.length);
+    $('done-title').focus();
+  }
+
+  function submit(event) {
+    event.preventDefault();
+    if (state.submitting) return;
+    clearErrors();
+    var errors = L.validateDetails(state.draft.details);
+    var dateErrors = L.validateDates(state.draft.dates, DATES);
+    if (dateErrors.dates) errors.dates = dateErrors.dates;
+    if (!state.draft.picks.length) errors.form = 'Pick at least one startup first.';
+    if (Object.keys(errors).length) { showErrors(errors); return; }
+    setSubmitting(true);
+    sendSelection(L.buildPayload(state.draft), function (res) {
+      if (res && res.ok) {
+        state.draft.submittedAt = new Date().toISOString();
+        saveDraft();
+        setSubmitting(false);
+        showDone(true, res);
+      } else {
+        setSubmitting(false);
+        showErrors((res && res.errors) || { form: 'Something went wrong. Please try again.' });
+      }
+    }, function () {
+      setSubmitting(false);
+      showErrors({ form: 'We couldn’t reach the server. Check your connection and try again. Your picks are saved on this device.' });
+    });
+  }
+
+  function sendSelection(payload, onOk, onFail) {
+    if (window.google && google.script && google.script.run) {
+      google.script.run.withSuccessHandler(onOk).withFailureHandler(onFail).submitSelection(payload);
+    } else if (API && window.fetch) {
+      // A plain-text body keeps this a simple request, which Apps Script answers without a CORS preflight.
+      fetch(API, { method: 'POST', body: JSON.stringify({ action: 'submit', payload: payload }) })
+        .then(function (r) { return r.json(); })
+        .then(onOk, onFail);
+    } else {
+      onFail(new Error('offline'));
+    }
+  }
+
+  /* ---------- a newer list from the sheet (static copy only) ---------- */
+  // The static copy opens with the list it was built with, then asks the web app for the current one. If the team
+  // changed the list since (an Excel upload or an edit in the sheet), the page switches to it.
+  function refreshData() {
+    if (!API || !window.fetch) return;
+    fetch(API + '?api=data')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data || !Array.isArray(data.startups) || !Array.isArray(data.dates)) return;
+        if (JSON.stringify(data) === JSON.stringify({ startups: STARTUPS, dates: DATES })) return;
+        applyData(data);
+      })
+      .catch(function () { /* keep the built-in list */ });
+  }
+
+  function applyData(data) {
+    setData(data);
+    state.draft = L.pruneDraft(state.draft, STARTUPS, DATES);
+    state.filters.sectors = state.filters.sectors.filter(function (name) {
+      return STARTUPS.some(function (s) { return s.sector === name; });
+    });
+    $('cards').textContent = '';
+    $('filter-groups').textContent = '';
+    $('datelist').textContent = '';
+    cards = {};
+    chips = [];
+    dateBoxes = [];
+    buildCards();
+    buildFilters();
+    buildDates();
+    renderPicks();
+    update();
+    showEmptyNotice();
+    if (!$('review').hidden && $('done').hidden) renderReview();
+  }
+
+  function showEmptyNotice() {
+    if (STARTUPS.length) return;
+    $('results-count').textContent = 'The startup list isn’t available right now. Please try again later.';
+    $('results-count').classList.add('is-message');
+  }
+
+  /* ---------- events ---------- */
+  function onNoteInput(e) {
+    var t = e.target;
+    if (t.tagName !== 'TEXTAREA' || !t.dataset.id) return;
+    var p = findPick(Number(t.dataset.id));
+    if (!p) return;
+    p.note = t.value;
+    saveDraft();
+  }
+
+  function onDetailsInput(e) {
+    var t = e.target;
+    if (t.dataset.field) { state.draft.details[t.dataset.field] = t.value; saveDraft(); }
+    if (t.id === 'd-general') { state.draft.generalNote = t.value; saveDraft(); }
+  }
+
+  function trapFocus(e, root) {
+    var nodes = root.querySelectorAll('button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])');
+    var list = Array.prototype.filter.call(nodes, function (n) { return !n.disabled && n.offsetParent !== null; });
+    if (!list.length) return;
+    var active = document.activeElement;
+    var current = list.indexOf(active);
+    // Focus on the panel's heading (tabindex="-1") or outside the panel counts as "before the first control".
+    if (e.shiftKey) {
+      if (current <= 0) { e.preventDefault(); list[list.length - 1].focus(); }
+    } else if (current === list.length - 1 || !root.contains(active)) {
+      e.preventDefault();
+      list[0].focus();
+    }
+  }
+
+  function onKeydown(e) {
+    var filtersOpen = document.body.classList.contains('filters-open');
+    if (e.key === 'Escape') {
+      if (!$('review').hidden) closeReview();
+      else if (filtersOpen) closeFilters();
+    } else if (e.key === 'Tab') {
+      if (!$('review').hidden) trapFocus(e, $('review'));
+      else if (filtersOpen) trapFocus(e, $('filters'));
+    }
+  }
+
+  function init() {
+    buildCards();
+    buildFilters();
+    buildDates();
+    renderPicks();
+    update();
+    showEmptyNotice();
+    refreshData();
+
+    $('cards').addEventListener('click', function (e) {
+      var btn = e.target.closest('.meet');
+      if (btn) togglePick(Number(btn.dataset.id));
+    });
+    $('cards').addEventListener('input', onNoteInput);
+    var searchTimer = null;
+    $('q').addEventListener('input', function (e) {
+      var value = e.target.value;
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(function () { state.filters.q = value.trim(); update(); }, 120);
+    });
+    $('picks-only').addEventListener('change', function (e) { state.filters.picksOnly = e.target.checked; update(); });
+    $('clear-filters').addEventListener('click', clearFilters);
+    $('empty-clear').addEventListener('click', clearFilters);
+    $('open-filters').addEventListener('click', openFilters);
+    $('close-filters').addEventListener('click', closeFilters);
+    $('apply-filters').addEventListener('click', closeFilters);
+    $('filters-scrim').addEventListener('click', closeFilters);
+    $('open-review').addEventListener('click', openReview);
+    $('close-review').addEventListener('click', closeReview);
+    $('scrim').addEventListener('click', closeReview);
+    $('done-close').addEventListener('click', closeReview);
+    $('review-form').addEventListener('submit', submit);
+    $('datelist').addEventListener('change', onDatesChange);
+    $('review-form').addEventListener('input', function (e) { onNoteInput(e); onDetailsInput(e); });
+    $('picklist').addEventListener('click', function (e) {
+      var remove = e.target.closest('[data-remove]');
+      if (!remove) return;
+      togglePick(Number(remove.dataset.remove));
+      renderReview();
+      $('review-title').focus();
+    });
+    document.addEventListener('keydown', onKeydown);
+    if (window.matchMedia) {
+      var wide = window.matchMedia('(min-width: 961px)');
+      if (wide.addEventListener) {
+        wide.addEventListener('change', function () {
+          if (wide.matches && document.body.classList.contains('filters-open')) closeFilters();
+        });
+      }
+    }
+  }
+
+  init();
+})();
+</script>
 </body>
 </html>
