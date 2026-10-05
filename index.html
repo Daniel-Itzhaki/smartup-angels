@@ -933,9 +933,11 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = ARInvest
   // still sends them. Inside Apps Script the page runs in a frame, so the link's parameters come from google.script.url.
   function captureUtm() {
     function keep(utm) {
-      if (!Object.keys(utm).length) return;
-      state.draft.utm = utm;
-      saveDraft();
+      if (Object.keys(utm).length) {
+        state.draft.utm = utm;
+        saveDraft();
+      }
+      recordVisit(state.draft.utm || {});
     }
     if (window.google && google.script && google.script.url) {
       google.script.url.getLocation(function (loc) {
@@ -946,6 +948,39 @@ if (typeof module !== 'undefined' && module.exports) { module.exports = ARInvest
       });
     } else {
       keep(L.utmFromSearch(window.location.search));
+    }
+  }
+
+  // Tells the web app that a UTM link was opened, once per browser session, so the admin can see who opened their link.
+  function recordVisit(utm) {
+    if (!Object.keys(utm).length) return;
+    var key = JSON.stringify(utm);
+    try {
+      if (window.sessionStorage.getItem('ar-visit') === key) return;
+      window.sessionStorage.setItem('ar-visit', key);
+    } catch (e) { /* storage blocked: count this view */ }
+    var visit = { utm: utm, visitor: visitorId() };
+    if (window.google && google.script && google.script.run) {
+      google.script.run.recordVisit(visit);
+      return;
+    }
+    if (!API) return;
+    var body = JSON.stringify({ action: 'visit', visit: visit });
+    if (navigator.sendBeacon && navigator.sendBeacon(API, body)) return;
+    if (window.fetch) fetch(API, { method: 'POST', body: body, keepalive: true, mode: 'no-cors' }).catch(function () {});
+  }
+
+  // A random ID kept on this device, so the admin can tell one person opening a link twice from two people.
+  function visitorId() {
+    try {
+      var id = window.localStorage.getItem('ar-visitor') || '';
+      if (!/^[a-z0-9]{8,40}$/.test(id)) {
+        id = Math.random().toString(36).slice(2, 12) + Date.now().toString(36);
+        window.localStorage.setItem('ar-visitor', id);
+      }
+      return id;
+    } catch (e) {
+      return '';
     }
   }
 
